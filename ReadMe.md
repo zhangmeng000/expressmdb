@@ -4,7 +4,7 @@
 2.学会用curl 调试ＡＰＩ
 curl --request PUT localhost:3000/posts/id
 
-***js
+````js
 app.get('/posts:id',function(req,res){
   res.send('GET /id')//前台显示
   console.log('GET /id')
@@ -21,4 +21,4 @@ app.delete('/posts:id',function(req,res){
   res.send('DELETE /id')//前台显示
   console.log('DELETE /id')//删除
 })
-***
+```
