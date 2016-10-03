@@ -21,4 +21,11 @@ app.delete('/posts:id',function(req,res){
   res.send('DELETE /id')//前台显示
   console.log('DELETE /id')//删除
 })
+
+
+app.get('/:name', function (req,res) {
+	var username = req.params.name;
+	var page = "<html>" + "<body>" + "<h2>" + username + "的购物车" + "</h2>" + "</body>" + "</html>"
+  res.send(page)
+})
 ```

@@ -1,11 +1,30 @@
 var express = require('express')
 var app = express()
-app.get('/posts',function(req,res){
-  res.send('GET /posts')//前台显示
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/express-api');
+var Post = require('./models/post');
+
+var db = mongoose.connection;
+db.on('error', console.log);
+db.once('open', function() {
+  console.log('success!')
+});
+
+
+app.get('/',function(req,res){
+  var page = "<form action = '/posts' method = 'post'>" +"<input type='text' name='title'/>"+"<input type = 'submit'>"+"</form>"
+  res.send(page)//前台显示
   console.log('GET /posts')//查找
 })
-app.get('/posts:id',function(req,res){
-  res.send('GET /id')//前台显示
+app.get('/posts',function(req,res){
+  Post.find().sort({'createdAt': -1}).exec(function(err, posts) {
+      res.json({posts:posts})
+  })//前台显示后台数据
   console.log('GET /id')
 })
 app.put('/posts:id',function(req,res){
@@ -13,7 +32,13 @@ app.put('/posts:id',function(req,res){
   console.log('PUT /id')//更新
 })
 app.post('/posts/',function(req,res){
-  res.send('POST /posts')//前台显示
+  // res.send('the post require is :' + req.body.title)//前台显示
+  var post = new Post({title: req.body.title});
+  post.save(function(err){
+    if(err) console.log(err);
+    console.log('saved!');
+  })
+  res.redirect('/posts')
   console.log('POST /posts')//上传
 })
 app.delete('/posts:id',function(req,res){
