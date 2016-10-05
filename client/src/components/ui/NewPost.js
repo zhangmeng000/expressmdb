@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import axios from 'axios'
 import Form from './Form'
 class NewPost extends React.Component {
 	getStyles() {
@@ -18,14 +19,25 @@ class NewPost extends React.Component {
       }
     };
   }
+	newPost(data){
+		console.log(data)
+		axios.post('http://localhost:3000/posts', data).then(res => {
+    console.log(res.data.message);
+    this.context.router.push('/')
+    })
+	}
 	render () {
 		let styles = this.getStyles();
 			return(
 				<div style={styles.content}>
-        	<div style={styles.title}><Form /></div>
+        	<div style={styles.title}>
+						<Form newPost= {this.newPost.bind(this)} />
+					</div>
       	</div>
 			)
 	}
 }
-
+NewPost.contextTypes = {
+  router:React.PropTypes.object
+}
 export default NewPost;

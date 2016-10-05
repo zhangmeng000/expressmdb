@@ -29,19 +29,34 @@ app.get('/posts',function(req,res){
   })//前台显示后台数据
   console.log('GET /id')
 })
+app.get('/post/:id',function(req,res){
+  Post.findOne({_id:req.params.id},function(err,doc){
+    if (err) return res.send('出错了');
+    res.json({post:doc})
+  })
+})
 app.put('/posts:id',function(req,res){
   res.send('PUT /id')//前台显示
   console.log('PUT /id')//更新
 })
 app.post('/posts/',function(req,res){
+  console.log(req.body)
   // res.send('the post require is :' + req.body.title)//前台显示
-  var post = new Post({title: req.body.title});
+  var post = new Post({
+    title: req.body.title,
+    category:req.body.category,
+    content:req.body.content});
+  // var post = new Post()
+  // for(var pro in req.body){
+  //   post[pro] = req.body[pro]
+  // }//可以用for 循环遍历
   post.save(function(err){
-    if(err) console.log(err);
+    if(err) return console.log(err);
     console.log('saved!');
   })
-  res.redirect('/posts')
-  console.log('POST /posts')//上传
+  res.json({message:'成功'})
+  // res.redirect('/posts')//重定向
+  // console.log('POST /posts')//上传
 })
 app.delete('/posts:id',function(req,res){
   res.send('DELETE /id')//前台显示

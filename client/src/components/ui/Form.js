@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
+import {Link,Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Radium from 'radium';
+
 
 class Form extends Component {
   getStyles() {
@@ -60,11 +61,21 @@ class Form extends Component {
       }
     };
   }
-
+  handleSubmit(e){
+    e.preventDefault();
+    let category = this.refs.category.value;
+    let title = this.refs.title.value;
+    let content = this.refs.content.value;
+    if(title.length ==0 ||category.length ==0||content.length ==0){
+      alert('请输入内容')
+      return
+    }
+    this.props.newPost({category,title,content})
+  }
   render() {
     const styles = this.getStyles();
     return (
-      <form style={styles.form}>
+      <form style={styles.form} onSubmit = {this.handleSubmit.bind(this)}>
         <div style={styles.div}>
           <label style={styles.label}>分类</label>
           <input style={styles.input} key='0' ref='category' />
