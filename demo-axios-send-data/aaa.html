@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<form action="?" name="form1" id="form1">
+
+	 <!-- 表单内容 -->
+		<input type="button" value="提交1" onclick="submitYouFrom('地址一')"/>
+		<input type="button" value="提交2" onclick="submitYouFrom('地址二')"/>
+	</form>
+	<script src="https://cdn.bootcss.com/axios/0.14.0/axios.min.js"></script>
+	<script>
+
+	function submitYouFrom(path){
+		$('form1').action=path;
+		$('form1').submit();
+		}
+
+
+
+	</script>
+</body>
+</html>
