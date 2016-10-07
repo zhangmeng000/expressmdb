@@ -9,7 +9,7 @@ var cors = require('cors');
 app.use(cors())
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/test');
+mongoose.connect('mongodb://localhost:27017/express-api');
 
 
 var Post = require('./models/post');
